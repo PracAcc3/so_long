@@ -14,7 +14,7 @@
 
 static void	print_moves(int moves)
 {
-	ft_printf("Moves %d\n", moves);
+	ft_printf("Moved %d\n", moves);
 }
 
 static void	try_move(t_data *d, int nx, int ny)

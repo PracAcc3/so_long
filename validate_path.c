@@ -12,78 +12,88 @@
 
 #include "so_long.h"
 
-static char	*dup_line(const char *src)
+static char	*str_dup_or_die(const char *src)
 {
-	char	*dst;
-	int		i;
-	int		len;
+	char		*dst;
+	size_t		i;
+	size_t		len;
 
-	len = (int)ft_strlen(src);
-	dst = (char *)malloc((size_t)len + 1);
+	len = ft_strlen(src);
+	dst = (char *)malloc(len + 1);
 	if (!dst)
 		error_exit("Malloc failed");
 	i = 0;
-	while (i < len)
+	while (i <= len)
 	{
 		dst[i] = src[i];
 		i++;
 	}
-	dst[i] = 0;
 	return (dst);
 }
 
-static char	**dup_map(char **map, int h)
+static char	**map_dup_or_die(t_data *d)
 {
 	char	**copy;
 	int		y;
 
-	copy = (char **)malloc(sizeof(char *) * (h + 1));
+	copy = (char **)malloc(sizeof(char *) * (d->h + 1));
 	if (!copy)
 		error_exit("Malloc failed");
 	y = 0;
-	while (y < h)
+	while (y < d->h)
 	{
-		copy[y] = dup_line(map[y]);
+		copy[y] = str_dup_or_die(d->map[y]);
 		y++;
 	}
 	copy[y] = NULL;
 	return (copy);
 }
 
-static void	flood_fill(char **m, int w, int h, int x, int y)
+static void	flood_fill(char **m, t_data *d, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= w || y >= h)
+	if (x < 0 || y < 0 || x >= d->w || y >= d->h)
 		return ;
 	if (m[y][x] == TILE_WALL || m[y][x] == 'V')
 		return ;
 	m[y][x] = 'V';
-	flood_fill(m, w, h, x + 1, y);
-	flood_fill(m, w, h, x - 1, y);
-	flood_fill(m, w, h, x, y + 1);
-	flood_fill(m, w, h, x, y - 1);
+	flood_fill(m, d, x + 1, y);
+	flood_fill(m, d, x - 1, y);
+	flood_fill(m, d, x, y + 1);
+	flood_fill(m, d, x, y - 1);
 }
 
-void	validate_path(t_data *d)
+static void	check_reachable(t_data *d, char **visited)
 {
-	char	**copy;
 	int		x;
 	int		y;
+	char	tile;
 
-	copy = dup_map(d->map, d->h);
-	flood_fill(copy, d->w, d->h, d->px, d->py);
 	y = 0;
 	while (y < d->h)
 	{
 		x = 0;
 		while (x < d->w)
 		{
-			if (d->map[y][x] == TILE_COLLECT && copy[y][x] != 'V')
-				error_game(d, "No valid path to all collectibles");
-			if (d->map[y][x] == TILE_EXIT && copy[y][x] != 'V')
-				error_game(d, "No valid path to exit");
+			tile = d->map[y][x];
+			if (visited[y][x] != 'V')
+			{
+				if (tile == TILE_COLLECT)
+					error_game(d, "No valid path to all collectibles");
+				if (tile == TILE_EXIT)
+					error_game(d, "No valid path to exit");
+			}
 			x++;
 		}
 		y++;
 	}
+}
+
+void	validate_path(t_data *d)
+{
+	char	**copy;
+
+	copy = map_dup_or_die(d);
+	flood_fill(copy, d, d->px, d->py);
+	check_reachable(d, copy);
 	free_map(copy);
 }

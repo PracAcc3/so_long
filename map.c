@@ -57,13 +57,28 @@ static void	map_error(char *line, int fd, char **map, const char *msg)
 	error_exit(msg);
 }
 
+static char	**append_line(char **map, size_t *n, char *line, int fd)
+{
+	char	**tmp;
+
+	if (sanitize_line(line) == 0)
+		map_error(line, fd, map, "Empty line in map");
+	tmp = grow_map(map, *n);
+	if (!tmp)
+		map_error(line, fd, map, "Malloc failed");
+	map = tmp;
+	map[*n] = line;
+	(*n)++;
+	map[*n] = NULL;
+	return (map);
+}
+
 void	read_map(t_data *d, char *file)
 {
 	int		fd;
 	char	**map;
 	size_t	n;
 	char	*line;
-	char	**tmp;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -73,20 +88,12 @@ void	read_map(t_data *d, char *file)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (sanitize_line(line) == 0)
-			map_error(line, fd, map, "Empty line in map");
-		tmp = grow_map(map, n);
-		if (!tmp)
-			map_error(line, fd, map, "Malloc failed");
-		map = tmp;
-		map[n] = line;
-		n++;
-		map[n] = NULL;
+		map = append_line(map, &n, line, fd);
 		line = get_next_line(fd);
 	}
 	close(fd);
 	if (n == 0)
-		error_exit("Empty map");
+		error_exit("Empty");
 	d->map = map;
 	validate_and_set(d, file);
 }

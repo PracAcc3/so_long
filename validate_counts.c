@@ -25,20 +25,20 @@ static void	check_counts(t_data *d, int p_count, int e_count, int c_count)
 
 static void	count_tile(t_data *d, int x, int y, int *counts)
 {
-	char	c;
+	char	tile;
 
-	c = d->map[y][x];
-	if (c == TILE_PLAYER)
+	tile = d->map[y][x];
+	if (tile == TILE_PLAYER)
 	{
 		counts[0]++;
 		d->px = x;
 		d->py = y;
 	}
-	else if (c == TILE_EXIT)
+	else if (tile == TILE_EXIT)
 		counts[1]++;
-	else if (c == TILE_COLLECT)
+	else if (tile == TILE_COLLECT)
 		counts[2]++;
-	else if (c != TILE_FLOOR && c != TILE_WALL)
+	else if (tile != TILE_FLOOR && tile != TILE_WALL)
 		error_game(d, "Invalid character in map");
 }
 

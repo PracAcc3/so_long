@@ -19,28 +19,11 @@ void	ft_putstr_fd(const char *s, int fd)
 	write(fd, s, ft_strlen(s));
 }
 
-void	ft_putnbr_fd(int n, int fd)
-{
-	char	c;
-	long	nb;
-
-	nb = n;
-	if (nb < 0)
-	{
-		write(fd, "-", 1);
-		nb = -nb;
-	}
-	if (nb >= 10)
-		ft_putnbr_fd((int)(nb / 10), fd);
-	c = (char)('0' + (nb % 10));
-	write(fd, &c, 1);
-}
-
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t					i;
-	unsigned const char	*a;
-	unsigned const char	*b;
+	size_t				i;
+	const unsigned char	*a;
+	const unsigned char	*b;
 
 	if (!s1 || !s2)
 		return (1);

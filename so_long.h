@@ -21,8 +21,8 @@
 
 # include "ft_printf.h"
 # include "get_next_line.h"
-# define TILE 16
 
+# define TILE 32
 # define TILE_FLOOR '0'
 # define TILE_WALL '1'
 # define TILE_PLAYER 'P'
@@ -62,14 +62,11 @@ void	validate_and_set(t_data *d, const char *file);
 void	draw_map(t_data *d);
 int		key_hook(int key, t_data *d);
 int		close_game(t_data *d);
-
 void	error_game(t_data *d, const char *msg);
 void	error_exit(const char *msg);
 void	free_map(char **map);
-
 size_t	ft_strlen(const char *s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_putstr_fd(const char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
 
 #endif

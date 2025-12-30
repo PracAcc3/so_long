@@ -17,13 +17,11 @@ void	validate_counts(t_data *d);
 static void	check_extension(t_data *d, const char *file)
 {
 	size_t	len;
-	size_t	suf_len;
 
 	len = ft_strlen(file);
-	suf_len = ft_strlen(".ber");
-	if (len < suf_len)
+	if (len < 4)
 		error_game(d, "Map must end with .ber");
-	if (ft_strncmp(file + (len - suf_len), ".ber", suf_len) != 0)
+	if (ft_strncmp(file + (len - 4), ".ber", 4) != 0)
 		error_game(d, "Map must end with .ber");
 }
 
