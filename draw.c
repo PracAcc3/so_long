@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syedh <syedh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: synoshah <synoshah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:00:00 by syedh             #+#    #+#             */
-/*   Updated: 2025/12/27 00:00:00 by syedh            ###   ########.fr       */
+/*   Updated: 2026/01/07 17:37:00 by synoshah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static void	put_tile(t_data *d, void *img, int x, int y)
 {
-	if (!img)
-		return ;
 	mlx_put_image_to_window(d->mlx, d->win, img, x * TILE, y * TILE);
 }
 

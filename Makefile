@@ -1,5 +1,5 @@
 NAME		:= so_long
-CC		:= cc
+CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
 
 SRCS		:= main.c map.c validate.c validate_setup.c validate_counts.c \

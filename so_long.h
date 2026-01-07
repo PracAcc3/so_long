@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syedh <syedh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: synoshah <synoshah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:00:00 by syedh             #+#    #+#             */
-/*   Updated: 2025/12/27 00:00:00 by syedh            ###   ########.fr       */
+/*   Updated: 2026/01/07 17:33:08 by synoshah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
-# define KEY_UP 65362
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
-# define KEY_DOWN 65364
 
 typedef struct s_data
 {
@@ -59,6 +55,9 @@ typedef struct s_data
 
 void	read_map(t_data *d, char *file);
 void	validate_and_set(t_data *d, const char *file);
+void	validate_setup(t_data *d, const char *file);
+void	validate_counts(t_data *d);
+void	validate_path(t_data *d);
 void	draw_map(t_data *d);
 int		key_hook(int key, t_data *d);
 int		close_game(t_data *d);

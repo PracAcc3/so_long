@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syedh <syedh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: synoshah <synoshah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:00:00 by syedh             #+#    #+#             */
-/*   Updated: 2025/12/27 00:00:00 by syedh            ###   ########.fr       */
+/*   Updated: 2026/01/07 17:34:12 by synoshah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ static void	cleanup_images(t_data *d)
 		mlx_destroy_image(d->mlx, d->collect);
 	if (d->exit)
 		mlx_destroy_image(d->mlx, d->exit);
-	d->wall = NULL;
-	d->floor = NULL;
-	d->player = NULL;
-	d->collect = NULL;
-	d->exit = NULL;
 }
 
 static void	cleanup(t_data *d)
@@ -40,23 +35,18 @@ static void	cleanup(t_data *d)
 	cleanup_images(d);
 	if (d->mlx && d->win)
 		mlx_destroy_window(d->mlx, d->win);
-	d->win = NULL;
 	if (d->mlx)
 	{
 		mlx_destroy_display(d->mlx);
 		free(d->mlx);
 	}
-	d->mlx = NULL;
-	if (d->map)
-		free_map(d->map);
-	d->map = NULL;
+	free_map(d->map);
 }
 
 int	close_game(t_data *d)
 {
 	cleanup(d);
 	exit(0);
-	return (0);
 }
 
 void	error_game(t_data *d, const char *msg)

@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syedh <syedh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: synoshah <synoshah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:00:00 by syedh             #+#    #+#             */
-/*   Updated: 2025/12/27 00:00:00 by syedh            ###   ########.fr       */
+/*   Updated: 2026/01/07 17:34:30 by synoshah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	print_moves(int moves)
-{
-	ft_printf("Moved %d\n", moves);
-}
-
-static void	try_move(t_data *d, int nx, int ny)
+static void	try_to_move(t_data *d, int nx, int ny)
 {
 	char	target;
 
@@ -35,7 +30,7 @@ static void	try_move(t_data *d, int nx, int ny)
 	d->py = ny;
 	d->map[d->py][d->px] = TILE_PLAYER;
 	d->moves++;
-	print_moves(d->moves);
+	ft_printf("Moved %d\n", d->moves);
 	draw_map(d);
 	if (target == TILE_EXIT && d->c_left == 0)
 		close_game(d);
@@ -45,13 +40,13 @@ int	key_hook(int key, t_data *d)
 {
 	if (key == KEY_ESC)
 		close_game(d);
-	else if (key == KEY_W || key == KEY_UP)
-		try_move(d, d->px, d->py - 1);
-	else if (key == KEY_S || key == KEY_DOWN)
-		try_move(d, d->px, d->py + 1);
-	else if (key == KEY_A || key == KEY_LEFT)
-		try_move(d, d->px - 1, d->py);
-	else if (key == KEY_D || key == KEY_RIGHT)
-		try_move(d, d->px + 1, d->py);
+	else if (key == KEY_W)
+		try_to_move(d, d->px, d->py - 1);
+	else if (key == KEY_S)
+		try_to_move(d, d->px, d->py + 1);
+	else if (key == KEY_A)
+		try_to_move(d, d->px - 1, d->py);
+	else if (key == KEY_D)
+		try_to_move(d, d->px + 1, d->py);
 	return (0);
 }

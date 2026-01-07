@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   validate_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syedh <syedh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: synoshah <synoshah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:00:00 by syedh             #+#    #+#             */
-/*   Updated: 2025/12/27 00:00:00 by syedh            ###   ########.fr       */
+/*   Updated: 2026/01/07 19:35:54 by synoshah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static char	*str_dup_or_die(const char *src)
+static char	*str_dup_or_null(const char *src)
 {
 	char		*dst;
 	size_t		i;
@@ -21,7 +21,7 @@ static char	*str_dup_or_die(const char *src)
 	len = ft_strlen(src);
 	dst = (char *)malloc(len + 1);
 	if (!dst)
-		error_exit("Malloc failed");
+		return (NULL);
 	i = 0;
 	while (i <= len)
 	{
@@ -35,14 +35,23 @@ static char	**map_dup_or_die(t_data *d)
 {
 	char	**copy;
 	int		y;
+	int		i;
 
 	copy = (char **)malloc(sizeof(char *) * (d->h + 1));
 	if (!copy)
-		error_exit("Malloc failed");
+		error_game(d, "Malloc failed");
 	y = 0;
 	while (y < d->h)
 	{
-		copy[y] = str_dup_or_die(d->map[y]);
+		copy[y] = str_dup_or_null(d->map[y]);
+		if (!copy[y])
+		{
+			i = 0;
+			while (i < y)
+				free(copy[i++]);
+			free(copy);
+			error_game(d, "Malloc failed");
+		}
 		y++;
 	}
 	copy[y] = NULL;
@@ -78,9 +87,9 @@ static void	check_reachable(t_data *d, char **visited)
 			if (visited[y][x] != 'V')
 			{
 				if (tile == TILE_COLLECT)
-					error_game(d, "No valid path to all collectibles");
+					error_game(d, "No path to every collectibles");
 				if (tile == TILE_EXIT)
-					error_game(d, "No valid path to exit");
+					error_game(d, "No path to exit");
 			}
 			x++;
 		}

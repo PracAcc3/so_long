@@ -1,8 +1,0 @@
-# build outputs
-*.o
-obj/
-so_long
-
-# OS/editor junk
-.DS_Store
-.vscode/

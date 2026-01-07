@@ -3,25 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   validate_setup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syedh <syedh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: synoshah <synoshah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:00:00 by syedh             #+#    #+#             */
-/*   Updated: 2025/12/27 00:00:00 by syedh            ###   ########.fr       */
+/*   Updated: 2026/01/07 17:33:08 by synoshah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	validate_counts(t_data *d);
 
 static void	check_extension(t_data *d, const char *file)
 {
 	size_t	len;
 
 	len = ft_strlen(file);
-	if (len < 4)
-		error_game(d, "Map must end with .ber");
-	if (ft_strncmp(file + (len - 4), ".ber", 4) != 0)
+	if (len < 4 || ft_strncmp(file + (len - 4), ".ber", 4) != 0)
 		error_game(d, "Map must end with .ber");
 }
 
